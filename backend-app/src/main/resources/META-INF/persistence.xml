@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="pg-vertx-study">
+        <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
+
+        <class>org.mxwj.librarymanagement.model.User</class>
+
+        <properties>
+            <!-- Vert.x PostgreSQL 连接配置 -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://db:5432/grad_project_db"/>
+            <property name="jakarta.persistence.jdbc.user" value="grad_user"/>
+            <property name="jakarta.persistence.jdbc.password" value="yoursecurepassword"/>
+
+            <!-- Hibernate Reactive 特定配置 -->
+            <property name="hibernate.connection.pool_size" value="10"/>
+
+            <!-- SQL 日志配置 -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+
+            <!-- 启用响应式模式 -->
+            <!-- <property name="hibernate.reactive" value="true"/> -->
+
+            <!-- 数据库schema生成策略 -->
+            <property name="javax.persistence.schema-generation.database.action" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,33 @@
+.borrow-record-table {
+  width: 100%;
+  
+  .rt-TableCell, .rt-TableColumnHeaderCell {
+    padding: 1rem;
+  }
+  
+  .rt-TableRow:hover {
+    background-color: var(--gray-2);
+  }
+  
+  .rt-Badge {
+    font-size: 0.75rem;
+  }
+}
+
+.pagination {
+  margin-top: 1rem;
+  
+  .rt-Button {
+    min-width: 40px;
+    
+    &[data-variant="solid"] {
+      background-color: var(--accent-9);
+      color: white;
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

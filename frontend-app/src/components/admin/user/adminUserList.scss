@@ -1,0 +1,31 @@
+.rt-TableRoot {
+    width: 100%;
+    
+    .rt-TableCell, 
+    .rt-TableColumnHeaderCell {
+      padding: 0.75rem 1rem;
+      vertical-align: middle;
+    }
+    
+    .rt-TableColumnHeaderCell {
+      font-weight: 600;
+      background-color: var(--gray-2);
+      border-bottom: 1px solid var(--gray-6);
+    }
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    
+    button {
+      min-width: 40px;
+      
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }

@@ -1,0 +1,12 @@
+@use "sass:color";
+
+.book-card {
+  width: 100%;
+  max-width: 220px;
+  height: 100%;
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}

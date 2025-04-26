@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "org.mxwj.librarymanagement.Main",
+            "projectName": "starter"
+        },
+        {
+            "type": "java",
+            "name": "Debug Vert.x Application",
+            "request": "launch",
+            "mainClass": "org.mxwj.librarymanagement.Main",
+            "projectName": "librarymanagement",
+            "env": {
+                "DEBUG": "true"
+            }
+        }
+    ]
+}

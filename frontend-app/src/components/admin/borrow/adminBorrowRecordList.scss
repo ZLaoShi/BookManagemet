@@ -1,0 +1,65 @@
+.admin-borrow-record-table {
+    width: 100%;
+    overflow-x: auto;
+    
+    .rt-TableCell, 
+    .rt-TableColumnHeaderCell {
+      padding: 0.75rem 1rem;
+      vertical-align: middle;
+    }
+    
+    .rt-TableColumnHeaderCell {
+      font-weight: 600;
+      background-color: var(--gray-2);
+      border-bottom: 1px solid var(--gray-6);
+    }
+    
+    .rt-TableRow {
+      &:hover {
+        background-color: var(--gray-2);
+      }
+      
+      &:not(:last-child) {
+        .rt-TableCell {
+          border-bottom: 1px solid var(--gray-4);
+        }
+      }
+    }
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    
+    button {
+      min-width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &[data-variant="solid"] {
+        background-color: var(--accent-9);
+        color: white;
+      }
+      
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .admin-borrow-record-table {
+      font-size: 0.875rem;
+      
+      .rt-TableCell,
+      .rt-TableColumnHeaderCell {
+        padding: 0.5rem;
+        white-space: nowrap;
+      }
+    }
+  }

@@ -1,0 +1,10 @@
+.profile-container {
+  padding: 2rem;
+  
+  .rt-Button {
+    &:hover {
+      background-color: var(--accent-9);
+      color: white;
+    }
+  }
+}

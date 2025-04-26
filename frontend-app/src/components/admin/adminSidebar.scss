@@ -1,0 +1,29 @@
+.admin-sidebar {
+  width: 240px;
+  background-color: white;
+  border-right: 1px solid var(--gray-5);
+  padding: 20px;
+  
+  .sidebar-item {
+    padding: 10px;
+    border-radius: 6px;
+    color: var(--gray-11);
+    text-decoration: none;
+    transition: all 0.2s;
+    
+    &:hover {
+      background-color: var(--gray-3);
+    }
+    
+    &.active {
+      background-color: var(--accent-3);
+      color: var(--accent-11);
+      font-weight: 500;
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

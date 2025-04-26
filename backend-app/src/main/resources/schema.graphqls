@@ -1,0 +1,175 @@
+type Query {
+  user(id: ID!): User
+  users(page: Int = 1, size: Int = 10, orderBy:String = "id"): UsersPage
+  
+  userInfo(id: ID!): UserInfo
+
+  book(id: ID!): Book
+  books(page: Int = 1, size: Int = 10): BooksPage
+  searchBooks(keyword: String!, page: Int = 1, size: Int = 10): BooksPage
+
+  myBorrowRecords(page: Int = 1, size: Int = 10): BorrowRecordsPage # 查询用户的借阅记录
+  borrowRecords(page: Int = 1, size: Int = 10, status: Int = -1, keyword: String = ""): BorrowRecordsPage # 查询所有借阅记录(管理员)
+ 
+  account(id: ID!): Account  # 查询单个账户
+  accounts(page: Int = 1, size: Int = 10, orderBy: String = "id"): AccountPage # 分页查询账户列表
+  searchAccounts(keyword: String!, page: Int = 1, size: Int = 10): AccountPage # 搜索账户
+}
+
+type Mutation {
+  createUser(input: UserInput!): User
+  updateUser(id: ID!, input: UserInput!): User
+  deleteUser(id: ID!): Boolean
+
+  createUserInfo(input: UserInfoInput!): UserInfo
+  updateUserInfo(input: UserInfoInput!): UserInfo
+  login(username: String!, password: String!): LoginResponse
+
+  register(input: AccountInput!): Account
+  logout(token: String!): Boolean 
+
+  createBook(input: CreateBookInput!): Book
+  updateBook(id: ID!, input: CreateBookInput!): Book
+  deleteBook(id: ID!): Boolean
+
+  borrowBook(input: BorrowBookInput!): BorrowRecord 
+  returnBook(input: ReturnBookInput!): BorrowRecord 
+
+  updateAccountStatus(id: ID!, status: Int!): Account 
+  updateAccountType(id: ID!, userType: Int!): Account 
+  resetPassword(id: ID!, newPassword: String!): Boolean 
+
+  # 管理员代替用户借书
+  adminBorrowBook(userId: ID!, input: BorrowBookInput!): BorrowRecord
+  # 管理员代替用户还书
+  adminReturnBook(userId: ID!, input: ReturnBookInput!): BorrowRecord
+  # 管理员强制归还图书(处理特殊情况如图书丢失、损坏等)
+  adminForceReturn(recordId: ID!, status: Int!, remarks: String): BorrowRecord
+}
+
+type LoginResponse {
+ token: String!
+ username: String!
+}
+
+type Account {
+ id: ID!
+ username: String!
+ email: String
+ createdAt: String
+ lastLogin: String
+ status: Int
+}
+
+input AccountInput {
+ username: String!
+ password: String!
+ email: String!
+}
+
+type AccountPage {
+ content: [Account]!
+ pageInfo: PageInfo!
+}
+
+type UserInfo {
+ id: ID!
+ fullName: String!
+ phone: String
+ address: String
+ maxBorrowBooks: Int
+ createdAt: String
+ updatedAt: String
+}
+
+input UserInfoInput {
+ fullName: String!
+ phone: String
+ address: String
+ maxBorrowBooks: Int
+}
+
+type Book {
+  id: ID
+  isbn: String
+  title: String
+  author: String
+  publisher: String
+  publishDate: String
+  category: String
+  description: String
+  totalCopies: Int
+  availableCopies: Int
+  location: String
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateBookInput {
+  isbn: String!
+  title: String!
+  author: String
+  publisher: String
+  publishDate: String
+  category: String
+  description: String
+  totalCopies: Int
+  availableCopies: Int
+  location: String
+}
+
+type BooksPage {
+  content: [Book]!
+  pageInfo: PageInfo!
+}
+
+type BorrowRecord {
+  id: ID!
+  book: Book!
+  borrowDate: String!
+  dueDate: String!
+  returnDate: String
+  status: Int!    # 0:借阅中, 1:已归还, 2:逾期未还, 3:已损坏/丢失
+  remarks: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+type BorrowRecordsPage {
+  content: [BorrowRecord]!
+  pageInfo: PageInfo!
+}
+
+input BorrowBookInput {
+  bookId: ID!
+  remarks: String
+}
+
+input ReturnBookInput {
+  recordId: ID!
+  remarks: String
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String
+}
+
+type UsersPage {
+  content: [User]!
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  currentPage: Int!
+  pageSize: Int!
+  totalPages: Int!
+  totalElements: Int!
+  hasNext: Boolean!
+}
+
+input UserInput {
+  name: String!
+  email: String
+}

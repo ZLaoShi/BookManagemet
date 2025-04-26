@@ -1,0 +1,13 @@
+/* 在你的全局 CSS 文件中添加 (例如 src/index.css 或 src/App.css) */
+body {
+    margin: 0; /* 移除 body 的默认外边距 */
+    padding: 0; /* 同时移除内边距以防万一 */
+    /* 可选：设置一个基础的字体和背景色 */
+    font-family: sans-serif; 
+    /* background-color: #f8f9fa;  */ /* 或者你想要的页面背景色 */
+  }
+  
+  /* 可选但推荐：更好的盒模型处理 */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }

@@ -1,0 +1,72 @@
+      
+# my-graduation-project/docker-compose.yml
+version: '3.8' # 使用较新的版本
+
+services:
+  # --- 后端服务 ---
+  backend:
+    build: ./backend-app # 指定 Dockerfile 所在的目录
+    container_name: myapp-backend
+    restart: unless-stopped
+    environment:
+      # 覆盖 Dockerfile 中的 ENV，或提供实际值
+      # 注意：这里的 db 和 redis 是下面定义的服务名
+      DB_URL: "jdbc:postgresql://db:5432/grad_project_db" # 数据库服务名是 'db'
+      DB_USER: "grad_user"
+      DB_PASSWORD: "yoursecurepassword" # 生产环境应使用 secrets
+      REDIS_HOST: "redis" # Redis 服务名是 'redis'
+      REDIS_PORT: "6379"
+      # 其他后端需要的环境变量...
+    ports:
+      - "8888:8888" # 格式 "宿主机端口:容器端口"，仅用于调试，生产中应通过 Nginx 访问
+    networks:
+      - app-network
+    depends_on: # 确保数据库和 Redis 先启动 (但不保证完全可用)
+      - db
+      # - redis
+
+  # --- 前端服务 (使用 Nginx 托管) ---
+  frontend:
+    build: ./frontend-app
+    container_name: myapp-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80" # 将容器的 80 端口映射到宿主机的 8080 端口，方便直接访问测试，最终通过 Nginx 访问
+    networks:
+      - app-network
+
+  # --- PostgreSQL 数据库服务 ---
+  db:
+    image: postgres:16-alpine # 使用官方镜像
+    container_name: myapp-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "grad_project_db"
+      POSTGRES_USER: "grad_user"
+      POSTGRES_PASSWORD: "yoursecurepassword" # 生产环境应使用 secrets
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # 数据持久化
+    ports:
+      - "5432:5432" # 仅用于本地开发时直接连接数据库调试
+    networks:
+      - app-network
+
+  # --- Redis 缓存服务 ---
+  redis:
+    image: redis:7-alpine # 使用官方镜像
+    container_name: myapp-redis
+    restart: unless-stopped
+    # ports:
+    #  - "6379:6379" # 仅用于本地开发时直接连接 Redis 调试
+    networks:
+      - app-network
+
+# --- 网络定义 ---
+networks:
+  app-network:
+    driver: bridge # Docker 默认的网络驱动
+
+# --- 数据卷定义 ---
+volumes:
+  postgres_data: # 用于 PostgreSQL 数据持久化
+

@@ -1,0 +1,134 @@
+.rt-TableRoot {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    
+    .rt-TableCell, 
+    .rt-TableColumnHeaderCell {
+      padding: 0.75rem 1rem;
+      vertical-align: middle;
+      text-align: left;
+    }
+    
+    .rt-TableColumnHeaderCell {
+      font-weight: 600;
+      color: var(--gray-12);
+      background-color: var(--gray-2);
+      border-bottom: 1px solid var(--gray-6);
+    }
+    
+    .rt-TableRow {
+      &:hover {
+        background-color: var(--gray-2);
+      }
+      
+      &:not(:last-child) {
+        .rt-TableCell {
+          border-bottom: 1px solid var(--gray-4);
+        }
+      }
+    }
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    
+    button {
+      min-width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &[data-variant="solid"] {
+        background-color: var(--accent-9);
+        color: white;
+      }
+      
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  .book-action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    
+    button {
+      min-width: 60px;
+    }
+  }
+  
+  .rt-AlertDialogContent {
+    max-width: 450px;
+    background-color: white;
+    border-radius: 6px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    
+    .rt-AlertDialogTitle {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .rt-AlertDialogDescription {
+      font-size: 0.875rem;
+      color: var(--gray-11);
+      margin-bottom: 1rem;
+    }
+  }
+  
+  // 增加删除确认对话框的动画
+  @keyframes dialogFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .rt-AlertDialogOverlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    inset: 0;
+    animation: overlayFadeIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  @keyframes overlayFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  // 响应式调整
+  @media (max-width: 768px) {
+    .rt-TableRoot {
+      font-size: 0.875rem;
+      
+      .rt-TableCell,
+      .rt-TableColumnHeaderCell {
+        padding: 0.5rem;
+      }
+    }
+    
+    .book-action-buttons {
+      flex-direction: column;
+      
+      button {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+  }
