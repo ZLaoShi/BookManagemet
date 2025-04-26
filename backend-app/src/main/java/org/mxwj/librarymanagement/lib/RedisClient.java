@@ -14,14 +14,6 @@ public class RedisClient {
     private RedisConnection connection;
     private RedisAPI redisAPI;
 
-    // public RedisClient(Vertx vertx) {
-    //     this.redis = Redis.createClient(
-    //         vertx,
-    //         new RedisOptions()
-    //             .setConnectionString("redis://localhost:6379")
-    //             .setMaxPoolSize(8)
-    //     );
-    // }
 
     public RedisClient(Vertx vertx) {
         // --- 从环境变量读取配置 ---
@@ -37,7 +29,6 @@ public class RedisClient {
         }
         // 如果你的 Redis 需要密码，考虑在这里添加密码处理（例如从 REDIS_PASSWORD 环境变量读取）
         // String redisPassword = System.getenv("REDIS_PASSWORD");
-        // --- 读取配置结束 ---
 
         // 使用从环境变量读取的值构建连接字符串
         String connectionString = "redis://" + redisHost + ":" + redisPort;
@@ -56,9 +47,6 @@ public class RedisClient {
         // 这有助于在 Redis 无法访问时快速失败
         getRedisAPI().onFailure(err -> {
              logger.error("初始 Redis 连接检查失败: {}", err.getMessage(), err);
-             // 根据你的应用需求，你可能想：
-             // - 抛出异常阻止应用启动
-             // - 设置一个标志表明 Redis 不可用
         });
     }
 
