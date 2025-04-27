@@ -1,72 +1,108 @@
-      
 # my-graduation-project/docker-compose.yml
-version: '3.8' # 使用较新的版本
 
 services:
   # --- 后端服务 ---
   backend:
-    build: ./backend-app # 指定 Dockerfile 所在的目录
+    build: ./backend-app
     container_name: myapp-backend
     restart: unless-stopped
     environment:
-      # 覆盖 Dockerfile 中的 ENV，或提供实际值
-      # 注意：这里的 db 和 redis 是下面定义的服务名
-      DB_URL: "jdbc:postgresql://db:5432/grad_project_db" # 数据库服务名是 'db'
+      DB_URL: "jdbc:postgresql://db:5432/grad_project_db"
       DB_USER: "grad_user"
-      DB_PASSWORD: "yoursecurepassword" # 生产环境应使用 secrets
-      REDIS_HOST: "redis" # Redis 服务名是 'redis'
+      DB_PASSWORD: "yoursecurepassword"
+      REDIS_HOST: "redis"
       REDIS_PORT: "6379"
-      # 其他后端需要的环境变量...
     ports:
-      - "8888:8888" # 格式 "宿主机端口:容器端口"，仅用于调试，生产中应通过 Nginx 访问
+      - "8888:8888"
     networks:
       - app-network
-    depends_on: # 确保数据库和 Redis 先启动 (但不保证完全可用)
+    depends_on:
       - db
       - redis
 
-  # --- 前端服务 (使用 Nginx 托管) ---
+  # --- 前端服务 ---
   frontend:
     build: ./frontend-app
     container_name: myapp-frontend
     restart: unless-stopped
     ports:
-      - "8080:80" # 将容器的 80 端口映射到宿主机的 8080 端口，方便直接访问测试，最终通过 Nginx 访问
+      - "8080:80"
     networks:
       - app-network
 
   # --- PostgreSQL 数据库服务 ---
   db:
-    image: postgres:16-alpine # 使用官方镜像
+    image: postgres:16-alpine
     container_name: myapp-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: "grad_project_db"
       POSTGRES_USER: "grad_user"
-      POSTGRES_PASSWORD: "yoursecurepassword" # 生产环境应使用 secrets
+      POSTGRES_PASSWORD: "yoursecurepassword"
     volumes:
-      - postgres_data:/var/lib/postgresql/data # 数据持久化
+      - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432" # 仅用于本地开发时直接连接数据库调试
+      - "5432:5432"
     networks:
       - app-network
 
   # --- Redis 缓存服务 ---
   redis:
-    image: redis:7-alpine # 使用官方镜像
+    image: redis:7-alpine
     container_name: myapp-redis
     restart: unless-stopped
     ports:
-      - "6380:6379" # 仅用于本地开发时直接连接 Redis 调试
+      - "6380:6379"
     networks:
       - app-network
+
+  # --- InfluxDB 时序数据库服务 ---
+  influxdb:
+    image: influxdb:1.8 # 使用 v1.8 比较简单
+    container_name: myapp-influxdb
+    restart: unless-stopped
+    ports:
+      - "8086:8086" # InfluxDB API 端口
+    volumes:
+      - influxdb_data:/var/lib/influxdb # 数据持久化
+    networks:
+      - app-network
+
+  # --- Telegraf 数据采集代理 ---
+  telegraf:
+    image: telegraf:latest
+    container_name: myapp-telegraf
+    restart: unless-stopped
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro # 挂载配置文件
+    networks:
+      - app-network
+    depends_on: # 依赖 InfluxDB 和 Backend
+      - influxdb
+      - backend
+
+  # --- Grafana 可视化服务 ---
+  grafana:
+    image: grafana/grafana:latest
+    container_name: myapp-grafana
+    restart: unless-stopped
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on: # 现在依赖 InfluxDB
+      - influxdb
 
 # --- 网络定义 ---
 networks:
   app-network:
-    driver: bridge # Docker 默认的网络驱动
+    driver: bridge
 
 # --- 数据卷定义 ---
 volumes:
-  postgres_data: # 用于 PostgreSQL 数据持久化
-
+  postgres_data:
+  # prometheus_data: {} # 不再需要 Prometheus 数据卷
+  influxdb_data: {}    # 添加 InfluxDB 数据卷
+  grafana_data: {}

@@ -1,0 +1,30 @@
+# ~/project/app/bishe/prometheus.yml
+
+global:
+  scrape_interval: 15s # 每 15 秒抓取一次指标
+  # evaluation_interval: 15s # 每 15 秒评估一次告警规则 (如果配置了的话)
+
+scrape_configs:
+  # 任务：抓取我们自己的后端应用指标
+  - job_name: 'backend'
+    metrics_path: /metrics # 后端应用暴露指标的路径
+    static_configs:
+      # 使用 Docker Compose 的服务名和容器内端口
+      - targets: ['backend:8888']
+
+  # (可选) 任务：抓取 Prometheus 自身的指标，用于监控 Prometheus
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090'] # Prometheus 默认监听自己的 9090 端口
+
+  # (可选，但推荐) 任务：抓取 Node Exporter 的指标 (如果添加了 Node Exporter 服务)
+  # - job_name: 'node'
+  #   static_configs:
+  #     - targets: ['node-exporter:9100']
+
+  # (可选) 任务：抓取 Nginx Exporter 的指标 (如果添加了 Nginx Exporter 服务)
+  # - job_name: 'nginx'
+  #   static_configs:
+  #     - targets: ['nginx-exporter:9113']
+
+    
