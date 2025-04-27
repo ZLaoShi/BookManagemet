@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-
 import org.mxwj.librarymanagement.graphql.AccountFetcher;
 import org.mxwj.librarymanagement.graphql.AuthFetcher;
 import org.mxwj.librarymanagement.graphql.BookFetcher;
@@ -38,6 +37,7 @@ import io.vertx.ext.web.handler.graphql.GraphQLHandlerOptions;
 import io.vertx.ext.web.handler.graphql.GraphiQLHandler;
 import io.vertx.ext.web.handler.graphql.GraphiQLHandlerOptions;
 import io.vertx.ext.web.handler.graphql.instrumentation.JsonObjectAdapter;
+import io.vertx.micrometer.PrometheusScrapingHandler; 
 
 public class MainVerticle extends AbstractVerticle {
     private static final Logger logger = LoggerFactory.getLogger(MainVerticle.class);
@@ -157,6 +157,9 @@ public class MainVerticle extends AbstractVerticle {
         router.route().handler(BodyHandler.create() );
         JWTUtils jwtUtils = new JWTUtils(vertx);
 
+        logger.info("Registering /metrics endpoint handler"); 
+        router.route("/metrics").handler(PrometheusScrapingHandler.create());
+
         //鉴权
         router.route("/graphql").handler(context -> {
             String authHeader = context.request().getHeader("Authorization");
@@ -198,7 +201,7 @@ public class MainVerticle extends AbstractVerticle {
             } else {
                 context.next();
             }
-        }); //TODO 第一次启动后如果输入一个不存在的token会导致服务器错误
+        });
 
         GraphQLHandler graphQLHandler = GraphQLHandler.create(graphQL,
             new GraphQLHandlerOptions()
@@ -221,5 +224,4 @@ public class MainVerticle extends AbstractVerticle {
                 return null;
             });
     }
-}
-//TODO 添加全局的日志
+} 
