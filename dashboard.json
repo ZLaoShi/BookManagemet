@@ -1,862 +1,862 @@
 {
-    "annotations": {
-      "list": [
-        {
-          "builtIn": 1,
-          "datasource": {
-            "type": "grafana",
-            "uid": "-- Grafana --"
-          },
-          "enable": true,
-          "hide": true,
-          "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
-          "type": "dashboard"
-        }
-      ]
-    },
-    "editable": true,
-    "fiscalYearStartMonth": 0,
-    "graphTooltip": 0,
-    "id": 3,
-    "links": [],
-    "panels": [
+  "annotations": {
+    "list": [
       {
+        "builtIn": 1,
         "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
+          "type": "grafana",
+          "uid": "-- Grafana --"
         },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 0
-        },
-        "id": 4,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "query": "SELECT non_negative_derivative(mean(\"sum\"), 1s) \nFROM \"vertx_http_server_response_bytes\" \nWHERE $timeFilter \nGROUP BY time($__interval), \"method\", \"route\", \"code\" \nfill(null)",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "title": "HTTP 响应吞吐量 (按方法/路由/状态码)",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 0
-        },
-        "id": 8,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "query": "SELECT mean(\"sum\") / mean(\"count\") \nFROM \"vertx_sql_processing_time_seconds\" \nWHERE $timeFilter AND \"count\" > 0 \nGROUP BY time($__interval) \nfill(null)",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "title": "SQL 处理时间 (平均值)",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 8
-        },
-        "id": 2,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "groupBy": [
-              {
-                "params": [
-                  "$__interval"
-                ],
-                "type": "time"
-              },
-              {
-                "params": [
-                  "null"
-                ],
-                "type": "fill"
-              }
-            ],
-            "orderByTime": "ASC",
-            "policy": "default",
-            "query": "SELECT non_negative_derivative(mean(\"counter\"), 1s) FROM \"vertx_http_server_requests_total\" WHERE $timeFilter GROUP BY time($__interval), \"code\", \"method\", \"route\" fill(null)",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "time_series",
-            "select": [
-              [
-                {
-                  "params": [
-                    "value"
-                  ],
-                  "type": "field"
-                },
-                {
-                  "params": [],
-                  "type": "mean"
-                }
-              ]
-            ],
-            "tags": []
-          }
-        ],
-        "title": "HTTP 请求速率 (按状态码/方法/路由)",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 8
-        },
-        "id": 6,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "query": "SELECT mean(\"gauge\") \nFROM \"vertx_http_server_active_requests\" \nWHERE $timeFilter \nGROUP BY time($__interval), \"method\" \nfill(previous)",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "title": "活跃 HTTP 请求数 (按方法)",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 16
-        },
-        "id": 3,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "query": "SELECT mean(\"sum\") / mean(\"count\") \nFROM \"vertx_http_server_response_time_seconds\" \nWHERE $timeFilter AND \"count\" > 0 \nGROUP BY time($__interval), \"method\", \"route\", \"code\" \nfill(null)",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "title": " HTTP 平均响应时间 (按方法/路由/状态码)",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 16
-        },
-        "id": 5,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "query": "      \nSELECT mean(\"gauge\") \nFROM \"vertx_http_server_active_connections\" \nWHERE $timeFilter \nGROUP BY time($__interval) \nfill(previous) -- 或者 fill(null)\n\n    ",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "title": "活跃 HTTP 连接数",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 24
-        },
-        "id": 1,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "groupBy": [
-              {
-                "params": [
-                  "$__interval"
-                ],
-                "type": "time"
-              },
-              {
-                "params": [
-                  "null"
-                ],
-                "type": "fill"
-              }
-            ],
-            "measurement": "vertx_http_server_response_bytes",
-            "orderByTime": "ASC",
-            "policy": "default",
-            "refId": "A",
-            "resultFormat": "time_series",
-            "select": [
-              [
-                {
-                  "params": [
-                    "sum"
-                  ],
-                  "type": "field"
-                },
-                {
-                  "params": [],
-                  "type": "mean"
-                }
-              ]
-            ],
-            "tags": []
-          }
-        ],
-        "title": "vertx_http_server_response_bytes_sum",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "dek8hk6hdayv4b"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 24
-        },
-        "id": 7,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.6.1",
-        "targets": [
-          {
-            "datasource": {
-              "type": "influxdb",
-              "uid": "dek8hk6hdayv4b"
-            },
-            "query": "SELECT mean(\"gauge\") \nFROM \"vertx_pool_in_use\" \nWHERE $timeFilter \nGROUP BY time($__interval), \"pool_type\" \nfill(previous)",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "title": "连接池状态 (按类型)",
-        "type": "timeseries"
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
       }
-    ],
-    "preload": false,
-    "refresh": "5s",
-    "schemaVersion": 41,
-    "tags": [],
-    "templating": {
-      "list": []
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "query": "SELECT non_negative_derivative(mean(\"sum\"), 1s) \nFROM \"vertx_http_server_response_bytes\" \nWHERE $timeFilter \nGROUP BY time($__interval), \"method\", \"route\", \"code\" \nfill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "HTTP 响应吞吐量 (按方法/路由/状态码)",
+      "type": "timeseries"
     },
-    "time": {
-      "from": "now-3h",
-      "to": "now"
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "query": "SELECT mean(\"sum\") / mean(\"count\") \nFROM \"vertx_sql_processing_time_seconds\" \nWHERE $timeFilter AND \"count\" > 0 \nGROUP BY time($__interval) \nfill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "SQL 处理时间 (平均值)",
+      "type": "timeseries"
     },
-    "timepicker": {},
-    "timezone": "browser",
-    "title": "New dashboard",
-    "uid": "bek7e0x7dperke",
-    "version": 13
-  }
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"counter\"), 1s) FROM \"vertx_http_server_requests_total\" WHERE $timeFilter GROUP BY time($__interval), \"code\", \"method\", \"route\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "HTTP 请求速率 (按状态码/方法/路由)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "query": "SELECT mean(\"sum\") / mean(\"count\") \nFROM \"vertx_http_server_response_time_seconds\" \nWHERE $timeFilter AND \"count\" > 0 \nGROUP BY time($__interval), \"method\", \"route\", \"code\" \nfill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": " HTTP 平均响应时间 (按方法/路由/状态码)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "vertx_http_server_response_bytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "sum"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "HTTP 服务器响应字节数总和",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "query": "      \nSELECT mean(\"gauge\") \nFROM \"vertx_http_server_active_connections\" \nWHERE $timeFilter \nGROUP BY time($__interval) \nfill(previous) -- 或者 fill(null)\n\n    ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "活跃 HTTP 连接数",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "query": "SELECT mean(\"gauge\") \nFROM \"vertx_http_server_active_requests\" \nWHERE $timeFilter \nGROUP BY time($__interval), \"method\" \nfill(previous)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "活跃 HTTP 请求数 (按方法)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dek8hk6hdayv4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dek8hk6hdayv4b"
+          },
+          "query": "SELECT mean(\"gauge\") \nFROM \"vertx_pool_in_use\" \nWHERE $timeFilter \nGROUP BY time($__interval), \"pool_type\" \nfill(previous)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "连接池状态 (按类型)",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "5s",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "New dashboard",
+  "uid": "bek7e0x7dperke",
+  "version": 15
+}
