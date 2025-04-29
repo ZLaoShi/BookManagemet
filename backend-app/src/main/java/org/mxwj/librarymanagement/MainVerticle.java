@@ -91,6 +91,8 @@ public class MainVerticle extends AbstractVerticle {
                             .dataFetcher("books", bookFetcher.getBooks())
                             .dataFetcher("searchBooks", bookFetcher.searchBooks())
 
+                            .dataFetcher("userInfo", GraphQLAuthHandler.requireUser(userInfoFetcher.getUserInfoById()))
+
                             .dataFetcher("myBorrowRecords", 
                                 GraphQLAuthHandler.requireUser(borrowFetcher.getMyBorrowRecords()))
                             .dataFetcher("borrowRecords", 

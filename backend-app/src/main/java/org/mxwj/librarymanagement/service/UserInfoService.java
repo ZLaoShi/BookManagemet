@@ -67,10 +67,13 @@ public class UserInfoService {
 
     public Uni<UserInfo> updateUserInfo(UpdateUserInfoDTO updateUserInfoDTO) {
         return factory.withSession(session -> {
-            return    session.find(UserInfo.class, updateUserInfoDTO.getAccountId())
+            // 1. 先根据 accountId 查找 UserInfo
+            return session.createQuery("FROM UserInfo ui WHERE ui.account.id = :accountId", UserInfo.class)
+                        .setParameter("accountId", updateUserInfoDTO.getAccountId())
+                        .getSingleResultOrNull() // 使用 getSingleResultOrNull 避免未找到时直接抛错
                         .onItem().ifNull().failWith(() ->
-                            new NoResultException("更新 UserInfo 失败：未找到 ID 为 " + updateUserInfoDTO.getAccountId() + " 的 UserInfo"))
-                        .flatMap(userInfo -> {
+                            new NoResultException("更新 UserInfo 失败：未找到 Account ID 为 " + updateUserInfoDTO.getAccountId() + " 关联的 UserInfo"))
+                        .flatMap(userInfo -> { // 2. 找到后再更新
                             boolean updated = false;
                             if (updateUserInfoDTO.getFullName() != null) {
                                 userInfo.setFullName(updateUserInfoDTO.getFullName());
@@ -84,10 +87,11 @@ public class UserInfoService {
                                 userInfo.setAddress(updateUserInfoDTO.getAddress());
                                 updated = true;
                             }
+                            // 注意：这里没有更新 maxBorrowBooks，如果需要，也应添加
                             if (updated) {
                                 userInfo.setUpdatedAt(OffsetDateTime.now());
                             }
-
+    
                             return session.flush()
                                     .replaceWith(userInfo);
                         });
@@ -103,9 +107,9 @@ public class UserInfoService {
             return session.find(UserInfo.class, userInfoId)
                 .onItem().ifNull().failWith(() ->
                     new NoResultException("删除 UserInfo 失败：未找到 ID 为 " + userInfoId + " 的 UserInfo"))
-                .flatMap(userInfo -> {
-
-                    return session.remove(userInfoId)
+                .flatMap(userInfo -> { // userInfo 是找到的实体对象
+                    // 使用实体对象进行删除
+                    return session.remove(userInfo)
                             .call(session::flush);
                 });
         }).
