@@ -6,7 +6,7 @@ import { logoutAndRedirect } from '../utils/auth';
 
 // 创建HTTP链接
 const httpLink = createHttpLink({
-  uri: 'http://192.168.0.102:8888/graphql',
+  uri: 'http://192.168.0.105:8888/graphql',
 });
 //请根据实际情况修改
 
