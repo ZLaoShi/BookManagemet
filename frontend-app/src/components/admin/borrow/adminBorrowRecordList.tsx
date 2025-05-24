@@ -4,7 +4,8 @@ import { Table, Badge, Button, Flex, Text } from '@radix-ui/themes';
 import { 
   BorrowStatus, 
   getBorrowStatusText, 
-  getBorrowStatusColor 
+  getBorrowStatusColor,
+  BorrowRecord
 } from '../../../types/borrowRecord';
 import { 
   ADMIN_RETURN_BOOK, 
@@ -13,23 +14,23 @@ import {
 import { AdminBorrowRecordAction } from './adminBorrowRecordAction';
 import './adminBorrowRecordList.scss';
 
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-}
+// interface Book {
+//   id: string;
+//   title: string;
+//   author: string;
+// }
 
-interface BorrowRecord {
-  id: string;
-  book: Book;
-  borrowDate: string;
-  dueDate: string;
-  returnDate?: string;
-  status: BorrowStatus;
-  remarks?: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// interface BorrowRecord {
+//   id: string;
+//   book: Book;
+//   borrowDate: string;
+//   dueDate: string;
+//   returnDate?: string;
+//   status: BorrowStatus;
+//   remarks?: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 interface AdminBorrowRecordListProps {
   borrowRecords: BorrowRecord[];

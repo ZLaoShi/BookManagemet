@@ -4,6 +4,10 @@ import { UserInfo } from './userInfo';
 export interface BorrowRecord {
   id: string;
   book: Book;
+  account: {
+    id: string;
+    username: string;
+  };
   userInfo?: UserInfo;
   borrowDate: string;
   dueDate: string;

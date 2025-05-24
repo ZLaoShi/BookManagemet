@@ -9,6 +9,11 @@ export const GET_ALL_BORROW_RECORDS = gql`
           id
           title
           author
+          isbn
+        }
+        account { 
+        id
+        username
         }
         borrowDate
         dueDate

@@ -12,30 +12,15 @@ import {
 import { 
   BorrowStatus, 
   getBorrowStatusText, 
-  getBorrowStatusColor 
+  getBorrowStatusColor,
+  BorrowRecord 
 } from '../../../types/borrowRecord';
 import { 
   ADMIN_RETURN_BOOK, 
   ADMIN_FORCE_RETURN 
 } from '../../../graphql/mutations/admin/borrowRecord';
+import { Book } from '../../../types/book'; 
 
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-}
-
-interface BorrowRecord {
-  id: string;
-  book: Book;
-  borrowDate: string;
-  dueDate: string;
-  returnDate?: string;
-  status: BorrowStatus;
-  remarks?: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 interface AdminBorrowRecordActionProps {
   record: BorrowRecord;
@@ -81,11 +66,18 @@ export const AdminBorrowRecordAction = ({
   };
 
   const handleNormalReturn = async () => {
+    if (!record || !record.account || !record.account.id) {
+      onError("无法执行操作：用户信息不完整。"); // 或者更具体的错误信息
+      return;
+    }
     try {
       await adminReturnBook({
         variables: {
-          recordId: record.id,
-          remarks
+          userId:  record.account.id,
+          input: {                   
+            recordId: record.id,     
+            remarks: remarks         
+          }
         }
       });
     } catch (error) {
@@ -159,18 +151,6 @@ export const AdminBorrowRecordAction = ({
               placeholder="添加处理备注..."
             />
           </Flex>
-          
-          {canNormalReturn && (
-            <Flex justify="end" mt="2">
-              <Button
-                variant="solid"
-                onClick={handleNormalReturn}
-                disabled={returningBook || forceReturning}
-              >
-                {returningBook ? '处理中...' : '正常归还'}
-              </Button>
-            </Flex>
-          )}
           
           <Flex direction="column" gap="3">
             <Text size="2" weight="bold">强制更改状态</Text>

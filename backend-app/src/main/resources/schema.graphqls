@@ -126,6 +126,7 @@ type BooksPage {
 type BorrowRecord {
   id: ID!
   book: Book!
+  account: Account 
   borrowDate: String!
   dueDate: String!
   returnDate: String

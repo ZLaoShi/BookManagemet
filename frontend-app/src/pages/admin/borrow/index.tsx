@@ -6,15 +6,16 @@ import { AdminBorrowRecordList } from '../../../components/admin/borrow/adminBor
 import { Message } from '../../../components/common/message';
 import { BorrowStatus } from '../../../types/borrowRecord';
 import './index.scss';
+import { Book } from '../../../types/book';
 
 interface BorrowRecordsData {
   borrowRecords: {
     content: Array<{
       id: string;
-      book: {
+      book: Book;
+      account: {
         id: string;
-        title: string;
-        author: string;
+        username: string;
       };
       borrowDate: string;
       dueDate: string;
